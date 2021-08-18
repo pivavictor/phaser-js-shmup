@@ -5,8 +5,7 @@
  
  Credits:
 
+ Some Graphics and Sound assets by original tutorial author: Jared York
  Made with Phaser 3: http://phaser.io/
  Sound Effects: Freesound(https://freesound.org/)
  Music: DOVA-SYNDROME(https://dova-s.jp/)
- 
- 
