@@ -5,7 +5,7 @@
  
  You can play it here: https://hirow.itch.io/js-shmup-project
  
- Credits:
+# Credits:
 
  Some Graphics and Sound assets by original tutorial author: Jared York
  
