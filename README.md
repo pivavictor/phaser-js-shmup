@@ -3,6 +3,8 @@
  
  Based on https://learn.yorkcs.com/category/tutorials/gamedev/phaser-3/build-a-space-shooter-with-phaser-3/
  
+ You can play it here: https://hirow.itch.io/js-shmup-project
+ 
  Credits:
 
  Some Graphics and Sound assets by original tutorial author: Jared York
