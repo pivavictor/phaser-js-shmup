@@ -178,17 +178,21 @@ class SceneMain extends Phaser.Scene {
 
         //Initializes Level Display
         var levelText;
-        levelText = this.add.text(this.game.config.width * 0.77, 16, '--Level 1--', {
+        levelText = this.add.text(this.game.config.width * 0.75, 14, '--Level 1--', {
+            fontFamily: 'uiFont',
             fontSize: '12px',
-            fill: "#fff"
+            fill: "#fff",
+            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
         });
         levelText.setDepth(10);
         
         //Initializes Player Score display and value
         var scoreText;
         scoreText = this.add.text(14, 16, 'Score: 0', {
-            fontSize: '18px',
-            fill: '#fff'
+            fontFamily: 'uiFont',
+            fontSize: '12px',
+            fill: '#fff',
+            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
         });
         scoreText.setDepth(10);
         this.player.score = 0;
@@ -198,9 +202,11 @@ class SceneMain extends Phaser.Scene {
         this.livesDisplay.setDepth(10); 
         this.qtyText = this.add.group();
         this.qtyText.setDepth(10); 
-        var livesText = this.add.text(14, 36, 'Lives: ', {
-            fontSize: '18px',
-            fill: '#fff'
+        var livesText = this.add.text(14, 40, 'Lives: ', {
+            fontFamily: 'uiFont',
+            fontSize: '12px',
+            fill: '#fff',
+            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
         });
         livesText.setDepth(10);
         this.updateLives();                        
@@ -255,8 +261,10 @@ class SceneMain extends Phaser.Scene {
         var seconds = 0;
         var minutes = 0;
         this.timerText = this.add.text(this.game.config.width * 0.7, 28, ' Time: 00:00', {
-            fontSize: '18px',
-            fill: '#fff'
+            fontFamily: 'uiFont',
+            fontSize: '14px',
+            fill: '#fff',
+            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
         });
         this.timerText.setDepth(10);
         this.time.addEvent({ 
@@ -676,7 +684,13 @@ class SceneMain extends Phaser.Scene {
         }
         else{
             this.livesDisplay = this.add.group({ key: 'sprPlayer' });
-            this.qtyText = this.add.text(100, 36, 'X' + this.player.lives);
+            this.qtyText = this.add.text(100, 40, 'X' + this.player.lives, { 
+                fontFamily: 'uiFont',
+                fontSize: '12px',
+                fill: '#fff',
+                shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
+             });
+            this.qtyText.setDepth(10);
         }
         Phaser.Actions.GridAlign(this.livesDisplay.getChildren(), {
             width: 10,

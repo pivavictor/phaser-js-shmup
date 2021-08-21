@@ -239,12 +239,12 @@ class Player extends Entity {
                         break;
                     case 4:
                         this.weaponOrbs(this);
-                        for(var i = 0; i < this.scene.orbs.getChildren().length; i++){
+                        for (var i = 0; i < this.scene.orbs.getChildren().length; i++) {
                             var orb = this.scene.orbs.getChildren()[i];
                             this.weaponOrbs(orb);
                         }
-                    default:
-                        break;
+                        default:
+                            break;
                 }
             }
         }
@@ -252,9 +252,9 @@ class Player extends Entity {
 
     onHit() {
         this.scene.sfx.hit.play();
-        this.lives -= 1;        
+        this.lives -= 1;
         this.scene.updateLives();
-        this.power -= 2;        
+        this.power -= 2;
         if (this.power < 1) this.power = 1;
         this.updateOrbs();
     }
@@ -341,7 +341,7 @@ class Player extends Entity {
         this.setData("timerShootTick", 0);
     }
 
-    weaponFocusBeam() {        
+    weaponFocusBeam() {
         this.setData("timerShootDelay", 1);
         switch (this.power) {
             case 1:
@@ -368,7 +368,7 @@ class Player extends Entity {
         this.setData("timerShootTick", 0);
     }
 
-    weaponHoming() {        
+    weaponHoming() {
         this.setData("timerShootDelay", 6);
         switch (this.power) {
             case 1:
@@ -380,74 +380,74 @@ class Player extends Entity {
                 break;
             case 3:
                 this.scene.playerLasers.add(new playerHoming(this.scene, this.x, this.y - 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 10, -20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 10, 20));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 10, -40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 10, 40));
                 break;
             case 4:
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 20, 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 20, 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y - 10, -40));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y - 10, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 20, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 20, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y - 10, -80));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y - 10, 80));
                 break;
             case 5:
                 this.scene.playerLasers.add(new playerHoming(this.scene, this.x, this.y - 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 10, -20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 10, 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y, -40));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 10, -40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 10, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y, -80));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y, 80));
                 break;
             case 6:
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 20, -20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 20, 20));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y - 10, -40));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y - 10, 40));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 30, this.y, -60));
-                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 30, this.y, 60));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 10, this.y - 20, -40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 10, this.y - 20, 40));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 20, this.y - 10, -80));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 20, this.y - 10, 80));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x - 30, this.y, -120));
+                this.scene.playerLasers.add(new playerHoming(this.scene, this.x + 30, this.y, 120));
                 break;
         }
         this.setData("timerShootTick", 0);
     }
 
-    weaponOrbs(entity){
+    weaponOrbs(entity) {
         switch (entity.scene.player.power) {
             case 1:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y, 0));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y));
                 break;
             case 2:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-3, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+3, entity.y, 0));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 3, entity.y));
                 break;
             case 3:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-3, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+3, entity.y, 0));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 3, entity.y));
                 break;
             case 4:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-3, entity.y, -10));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+3, entity.y, 10));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 3, entity.y));
                 break;
             case 5:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-3, entity.y, -10));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+3, entity.y, 10));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 3, entity.y));
                 break;
             case 6:
                 entity.scene.player.setData("timerShootDelay", 10);
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-3, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+3, entity.y, 0));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x-6, entity.y, -10));
-                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x+6, entity.y, 10));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 3, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x - 6, entity.y));
+                entity.scene.playerLasers.add(new PlayerLaser2(entity.scene, entity.x + 6, entity.y));
                 break;
         }
         this.setData("timerShootTick", 0);
     }
 
-    updateOrbs(){
+    updateOrbs() {
         this.scene.orbs.clear(false, true);
         if (this.weapon == 4) {
             if (this.power < 3) {
@@ -474,38 +474,38 @@ class Orb extends Entity {
 }
 
 class PlayerLaser extends Entity {
-    constructor(scene, x, y, angle) {
+    constructor(scene, x, y, angle = 0) {
         super(scene, x, y, "sprLaserPlayer1");
         this.body.velocity.y = -550;
         this.body.velocity.x = +angle;
         this.scale = 2;
-        this.damage = 3;
+        this.damage = 2;
     }
 }
 
 class PlayerLaser2 extends Entity {
-    constructor(scene, x, y, angle) {
+    constructor(scene, x, y, angle = 0) {
         super(scene, x, y, "sprLaserPlayer2");
         this.body.velocity.y = -550;
         this.body.velocity.x = +angle;
         this.scale = 2;
-        this.damage = 3;
+        this.damage = 2;
     }
 }
 
 class focusBeam extends Entity {
     constructor(scene, x, y, scale, damage = 1) {
         super(scene, x, y, "sprFocusBeam");
-        this.body.velocity.y = -1200;
+        this.body.velocity.y = -1500;
         this.scaleY = 3;
         this.scaleX = scale;
         this.damage = damage;
     }
 
-    update(){
-        this.setX(this.scene.player.x);        
+    update() {
+        this.setX(this.scene.player.x);
 
-        if(this.scene.keyZ.isUp){
+        if (this.scene.keyZ.isUp) {
             this.scene.playerLasers.clear(false, true);
         }
     }
@@ -514,7 +514,7 @@ class focusBeam extends Entity {
 class playerHoming extends Entity {
     constructor(scene, x, y, angle = 0) {
         super(scene, x, y, "sprHoming");
-        this.body.velocity.y = -450;
+        this.body.velocity.y = -1050;
         this.body.velocity.x = angle;
         this.alpha = 0.5;
         this.damage = 1;
@@ -533,56 +533,56 @@ class playerHoming extends Entity {
     }
 
     update() {
-        // if(this.refresh.getProgress() == 1){
-        //     this.state = this.states.MOVE_UP;
-        //     //this.target = null;
-        // }
 
         if (this.state == this.states.MOVE_UP) {
-            for (var i = 0; i < this.scene.enemies.getChildren().length; i++) {
-                var enemy = this.scene.enemies.getChildren()[i];
-                if (this.target != null){
-                    if (Phaser.Math.Distance.Between(
-                        this.x,
-                        this.y,
-                        this.target.x,
-                        this.target.y
-                    ) > 150){
-                        this.target = null;                        
-                        this.state = this.states.MOVE_UP;
-                    }
-                }
-                if (this.target == null) {
-                    if (Phaser.Math.Distance.Between(
-                            this.x,
-                            this.y,
-                            enemy.x,
-                            enemy.y
-                        ) < 300) {
-                        this.target = enemy;
-                        this.state = this.states.CHASE;
-                    }
-                }
-            }
+            this.updateTarget();
         }
 
         if (this.state == this.states.CHASE) {
-            var dx = this.target.x - this.x;
-            var dy = this.target.y - this.y;
+            this.chaseTarget();
+        }
+    }
 
-            var angle = Math.atan2(dy, dx);
+    updateTarget() {
+        for (var i = 0; i < this.scene.enemies.getChildren().length; i++) {
+            var enemy = this.scene.enemies.getChildren()[i];
+            if (i == 0) this.target = enemy;
+            if (this.state == this.states.MOVE_UP) {
+                if (Phaser.Math.Distance.Between(
+                        this.x,
+                        this.y,
+                        enemy.x,
+                        enemy.y
+                    ) <= 250) {
+                    this.target = enemy;
+                    this.state = this.states.CHASE;
+                }
+            }
+        }
+    }
 
-            var speed = 750;
-            this.body.setVelocity(
-                Math.cos(angle) * speed,
-                Math.sin(angle) * speed
-            );
+    chaseTarget() {
+        var dx = this.target.x - this.x;
+        var dy = this.target.y - this.y;
 
-            if (this.target.getData("isDead")) {
-                this.body.setVelocity(
-                    Math.cos(angle) * speed,
-                    -450
-                );
+        var angle = Math.atan2(dy, dx);
+
+        var speed = 1500;
+        this.body.setVelocity(
+            Math.cos(angle) * speed,
+            Math.sin(angle) * speed
+        );
+        if (this.target != null) {
+            if (Phaser.Math.Distance.Between(
+                    this.x,
+                    this.y,
+                    this.target.x,
+                    this.target.y
+                ) > 350) {
+                this.target = null;
+                this.state = this.states.MOVE_UP;
+            } else if (this.target.getData("isDead")) {
+                this.body.velocity.y = -1500;
                 this.state = this.states.MOVE_UP;
                 this.target = null;
             }

@@ -12,7 +12,7 @@ class SceneGameOver extends Phaser.Scene {
 
   create() {
     this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
-      fontFamily: 'monospace',
+      fontFamily: 'uiFont',
       fontSize: 48,
       fontStyle: 'bold',
       color: '#ffffff',
@@ -21,7 +21,7 @@ class SceneGameOver extends Phaser.Scene {
     this.title.setOrigin(0.5);
 
     this.score = this.add.text(this.game.config.width * 0.5, 188, "SCORE: " + this.finalScore, {
-      fontFamily: 'monospace',
+      fontFamily: 'uiFont',
       fontSize: 36,
       fontStyle: 'bold',
       color: '#ffffff',
@@ -30,7 +30,7 @@ class SceneGameOver extends Phaser.Scene {
     this.score.setOrigin(0.5);
 
     this.time = this.add.text(this.game.config.width * 0.5, 248, this.finalTime.text, {
-      fontFamily: 'monospace',
+      fontFamily: 'uiFont',
       fontSize: 36,
       fontStyle: 'bold',
       color: '#ffffff',

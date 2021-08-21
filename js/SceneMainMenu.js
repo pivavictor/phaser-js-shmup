@@ -83,22 +83,29 @@ class SceneMainMenu extends Phaser.Scene {
         // }, this);
 
         this.title = this.add.text(this.game.config.width * 0.5, 128, "JS Shmup Project", {
-            fontFamily: 'monospace',
-            fontSize: 36,
+            fontFamily: 'uiFont',
+            fontSize: 28,
             fontStyle: 'bold',
             color: '#ffffff',
             align: 'center'
         });
         this.title.setOrigin(0.5);
 
-        this.title2 = this.add.text(this.game.config.width * 0.7, 158, "JS STG プロジェクト", {
-            fontFamily: 'monospace',
+        this.title2 = this.add.text(this.game.config.width * 0.75, 148, "JS STG プロジェクト", {
+            fontFamily: 'uiFont',
             fontSize: 12,
             fontStyle: 'bold',
             color: '#ffffff',
-            align: 'center'
+            align: 'right'
         });
         this.title2.setOrigin(0.5);
+
+        this.ver = this.add.text(this.game.config.width * 0.85, this.game.config.height * 0.95, "v0.2.3", {
+            fontFamily: 'uiFont',
+            fontSize: 12,
+            color: '#ffffff',
+            align: 'right'
+        })
 
         this.backgrounds = [];
         for (var i = 0; i < 5; i++) {
