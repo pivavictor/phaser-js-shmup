@@ -44,7 +44,7 @@ class ChaserShip extends Entity {
     constructor(scene, x, y, multi) {
         super(scene, x, y, "sprEnemy1", "ChaserShip");
         this.body.velocity.y = Phaser.Math.Between(50, 100);
-        this.health = 8 * multi;
+        this.health = 5 * multi;
         this.score = 40 + (multi * 20);
         this.multi = multi;
         this.states = {
@@ -92,7 +92,7 @@ class GunShip extends Entity {
     constructor(scene, x, y, multi) {
         super(scene, x, y, "sprEnemy0", "GunShip");
         this.body.velocity.y = 300;
-        this.health = 16 * multi;
+        this.health = 12 * multi;
         this.score = 40 + (multi * 10);
         this.shootTimer = this.scene.time.addEvent({
             delay: 600,
@@ -124,7 +124,7 @@ class CarrierShip extends Entity {
     constructor(scene, x, y, multi) {
         super(scene, x, y, "sprEnemy2", "CarrierShip");
         this.body.velocity.y = Phaser.Math.Between(50, 100);
-        this.health = 20 * multi;
+        this.health = 18 * multi;
         this.score = 40 + (multi * 10);
         this.multi = multi;
         this.play("sprEnemy2");
@@ -164,7 +164,7 @@ class SmallMeteor extends Entity {
         this.speed = 200 + (multi * 50);
         this.body.velocity.y = Phaser.Math.Between(-this.speed, this.speed);
         this.body.velocity.x = Phaser.Math.Between(-this.speed, this.speed);
-        this.health = 7;
+        this.health = 6;
         this.score = 10 + multi;
         this.scale = 1;
     }
