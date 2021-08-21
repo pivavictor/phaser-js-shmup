@@ -29,7 +29,6 @@ class SceneGameOver extends Phaser.Scene {
     });
     this.score.setOrigin(0.5);
 
-    console.log(this.finalTime);
     this.time = this.add.text(this.game.config.width * 0.5, 248, this.finalTime.text, {
       fontFamily: 'monospace',
       fontSize: 36,

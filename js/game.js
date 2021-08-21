@@ -14,6 +14,7 @@ var config = {
     },
     scene: [SceneMainMenu,
         SceneMain,
+        SceneTest,
         SceneGameOver
     ],
     pixelArt: true,

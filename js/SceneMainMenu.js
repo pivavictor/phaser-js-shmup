@@ -59,6 +59,29 @@ class SceneMainMenu extends Phaser.Scene {
             this.scene.start("SceneMain");
         }, this);
 
+        // this.btnPlay2 = this.add.sprite(
+        //     this.game.config.width * 0.5,
+        //     this.game.config.height * 0.6,
+        //     "sprBtnPlay"
+        // );
+        // this.btnPlay2.setInteractive();
+        // this.btnPlay2.on("pointerover", function () {
+        //     this.btnPlay2.setTexture("sprBtnPlayHover"); // set the button texture to sprBtnPlayHover
+        //     this.sfx.btnOver.play(); // play the button over sound
+        // }, this);
+        // this.btnPlay2.on("pointerout", function () {
+        //     this.setTexture("sprBtnPlay");
+        // });
+        // this.btnPlay2.on("pointerdown", function () {
+        //     this.btnPlay2.setTexture("sprBtnPlayDown");
+        //     this.sfx.btnDown.play();
+        // }, this);
+        // this.btnPlay2.on("pointerup", function () {
+        //     this.btnPlay2.setTexture("sprBtnPlay");
+        //     music.stop();
+        //     this.scene.start("SceneTest");
+        // }, this);
+
         this.title = this.add.text(this.game.config.width * 0.5, 128, "JS Shmup Project", {
             fontFamily: 'monospace',
             fontSize: 36,
