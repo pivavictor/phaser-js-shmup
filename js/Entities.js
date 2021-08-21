@@ -257,6 +257,7 @@ class Player extends Entity {
         this.power -= 2;
         if (this.power < 1) this.power = 1;
         this.updateOrbs();
+        this.scene.updatePower();
     }
 
     onDestroy() {

@@ -7,6 +7,8 @@ class SceneMain extends Phaser.Scene {
 
     preload() {
         //#region image assets
+        this.load.bitmapFont('uiFont', 'content/uiFont.png', 'content/uiFont.fnt');
+
         this.load.image("sprBg0", "content/sprBg0.png");
         this.load.image("sprBg1", "content/sprBg1.png");
         this.load.image("uiWeapon1", "content/uiWeapon1.png");
@@ -178,22 +180,15 @@ class SceneMain extends Phaser.Scene {
 
         //Initializes Level Display
         var levelText;
-        levelText = this.add.text(this.game.config.width * 0.75, 14, '--Level 1--', {
-            fontFamily: 'uiFont',
-            fontSize: '12px',
-            fill: "#fff",
-            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
-        });
+        levelText = this.add.bitmapText(380, 10,
+            'uiFont',
+            '--Level 1--',
+            8,);
         levelText.setDepth(10);
         
         //Initializes Player Score display and value
         var scoreText;
-        scoreText = this.add.text(14, 16, 'Score: 0', {
-            fontFamily: 'uiFont',
-            fontSize: '12px',
-            fill: '#fff',
-            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
-        });
+        scoreText = this.add.bitmapText(12, 20, 'uiFont', 'SCORE: 0', 16);
         scoreText.setDepth(10);
         this.player.score = 0;
 
@@ -201,16 +196,11 @@ class SceneMain extends Phaser.Scene {
         this.livesDisplay = this.add.group(); 
         this.livesDisplay.setDepth(10); 
         this.qtyText = this.add.group();
-        this.qtyText.setDepth(10); 
-        var livesText = this.add.text(14, 40, 'Lives: ', {
-            fontFamily: 'uiFont',
-            fontSize: '12px',
-            fill: '#fff',
-            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
-        });
-        livesText.setDepth(10);
+        this.qtyText.setDepth(10);
         this.updateLives();                        
 
+        this.powerText = this.add.bitmapText(390, 560, 'uiFont', 'POWER: 1', 12);
+        this.powerText.setDepth(10);
         this.weaponUI = this.add.group({
             key: ['uiWeapon1', 'uiWeapon2', 'uiWeapon3', 'uiWeapon4'],
         });   
@@ -222,8 +212,8 @@ class SceneMain extends Phaser.Scene {
             height: 2,
             cellWidth: 26,
             cellHeight: 20,
-            x: 14,
-            y: 570
+            x: 380,
+            y: 585
         });
 
         //Used for bonus life calculations
@@ -260,12 +250,10 @@ class SceneMain extends Phaser.Scene {
         //Initializes in-game Timer display
         var seconds = 0;
         var minutes = 0;
-        this.timerText = this.add.text(this.game.config.width * 0.7, 28, ' Time: 00:00', {
-            fontFamily: 'uiFont',
-            fontSize: '14px',
-            fill: '#fff',
-            shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
-        });
+        this.timerText = this.add.bitmapText(this.game.config.width * 0.75, 20,
+            'uiFont',
+            ' TIME: 00:00',
+            14,);
         this.timerText.setDepth(10);
         this.time.addEvent({ 
             delay: 1000 ,
@@ -275,10 +263,10 @@ class SceneMain extends Phaser.Scene {
                     minutes++;
                     seconds = 0;
                 }
-                if(minutes < 10 && seconds < 10) this.timerText.setText(' Time: 0' + minutes + ':0' + seconds);
-                else if(minutes < 10) this.timerText.setText(' Time: 0' + minutes + ':' + seconds);
-                else if(seconds < 10) this.timerText.setText(' Time: ' + minutes + ':0' + seconds);
-                else this.timerText.setText(' Time: ' + minutes + ':' + seconds);
+                if(minutes < 10 && seconds < 10) this.timerText.setText(' TIME: 0' + minutes + ':0' + seconds);
+                else if(minutes < 10) this.timerText.setText(' TIME: 0' + minutes + ':' + seconds);
+                else if(seconds < 10) this.timerText.setText(' TIME: ' + minutes + ':0' + seconds);
+                else this.timerText.setText(' TIME: ' + minutes + ':' + seconds);
             },
             callbackScope: this,
             loop: true
@@ -382,7 +370,7 @@ class SceneMain extends Phaser.Scene {
                     enemy.explode(true);
                     //Scoring award and Life ups
                     enemy.scene.player.score += enemy.score;
-                    scoreText.setText('Score: ' + enemy.scene.player.score);
+                    scoreText.setText('SCORE: ' + enemy.scene.player.score);
                     if (enemy.scene.player.score > nextLife) {
                         enemy.scene.player.lives += 1;
                         enemy.scene.updateLives();                        
@@ -454,7 +442,7 @@ class SceneMain extends Phaser.Scene {
                     enemy.explode(true);
                     //Scoring award and Life ups
                     enemy.scene.player.score += enemy.score;
-                    scoreText.setText('Score: ' + enemy.scene.player.score);
+                    scoreText.setText('SCORE: ' + enemy.scene.player.score);
                     if (enemy.scene.player.score > nextLife) {
                         enemy.scene.player.lives += 1;
                         enemy.scene.updateLives();                      
@@ -483,11 +471,12 @@ class SceneMain extends Phaser.Scene {
             if (!player.getData("isDead")) {
                 if (player.power >= 1 && player.power <= 5) {
                     player.power += 1;
+                    player.scene.updatePower();
                     player.updateOrbs();
                 } else {
                     //Scoring award and Life ups
                     player.score += powerUp.score;                    
-                    scoreText.setText('Score: ' + player.score);
+                    scoreText.setText('SCORE: ' + player.score);
                     if (player.score > nextLife) {
                         player.lives += 1;
                         player.scene.updateLives();
@@ -673,10 +662,14 @@ class SceneMain extends Phaser.Scene {
         });
     }
 
+    updatePower(){
+        this.powerText.setText('POWER: ' + this.player.power);
+    }
+
     updateLives(){  
         this.livesDisplay.clear(false, true);
         this.qtyText.destroy();
-        if(this.player.lives <= 4){            
+        if(this.player.lives <= 5){            
             this.livesDisplay = this.add.group({
                 key: 'sprPlayer',
                 frameQuantity: this.player.lives
@@ -684,12 +677,7 @@ class SceneMain extends Phaser.Scene {
         }
         else{
             this.livesDisplay = this.add.group({ key: 'sprPlayer' });
-            this.qtyText = this.add.text(100, 40, 'X' + this.player.lives, { 
-                fontFamily: 'uiFont',
-                fontSize: '12px',
-                fill: '#fff',
-                shadow: { offsetX: 2, offsetY: 2, color: '#000000', fill: true }
-             });
+            this.qtyText = this.add.bitmapText(24, 575, 'uiFont', 'X' + this.player.lives, 12);
             this.qtyText.setDepth(10);
         }
         Phaser.Actions.GridAlign(this.livesDisplay.getChildren(), {
@@ -697,8 +685,8 @@ class SceneMain extends Phaser.Scene {
             height: 10,
             cellWidth: 18,
             cellHeight: 18,
-            x: 90,
-            y: 46
+            x: 12,
+            y: 580
         });
         this.livesDisplay.setDepth(10); 
     }

@@ -5,37 +5,23 @@ class SceneGameOver extends Phaser.Scene {
     });
   }
 
+  preload(){    
+    this.load.bitmapFont('uiFont', 'content/uiFont.png', 'content/uiFont.fnt');
+  }
+
   init (data){
     this.finalScore = data.score;
     this.finalTime = data.time;
   }
 
   create() {
-    this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
-      fontFamily: 'uiFont',
-      fontSize: 48,
-      fontStyle: 'bold',
-      color: '#ffffff',
-      align: 'center'
-    });
+    this.title = this.add.bitmapText(this.game.config.width * 0.5, 128, 'uiFont', "GAME OVER", 32);
     this.title.setOrigin(0.5);
 
-    this.score = this.add.text(this.game.config.width * 0.5, 188, "SCORE: " + this.finalScore, {
-      fontFamily: 'uiFont',
-      fontSize: 36,
-      fontStyle: 'bold',
-      color: '#ffffff',
-      align: 'center'
-    });
+    this.score = this.add.bitmapText(this.game.config.width * 0.5, 188, 'uiFont', "SCORE: " + this.finalScore, 28);
     this.score.setOrigin(0.5);
 
-    this.time = this.add.text(this.game.config.width * 0.5, 248, this.finalTime.text, {
-      fontFamily: 'uiFont',
-      fontSize: 36,
-      fontStyle: 'bold',
-      color: '#ffffff',
-      align: 'center'
-    });
+    this.time = this.add.bitmapText(this.game.config.width * 0.5, 248, 'uiFont', this.finalTime.text,  28);
     this.time.setOrigin(0.5);
 
     this.sfx = {

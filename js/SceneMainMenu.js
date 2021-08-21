@@ -6,6 +6,8 @@ class SceneMainMenu extends Phaser.Scene {
     }
 
     preload() {
+        this.load.bitmapFont('uiFont', 'content/uiFont.png', 'content/uiFont.fnt');
+        
         this.load.image("sprBtnPlay", "content/sprBtnPlay.png");
         this.load.image("sprBtnPlayHover", "content/sprBtnPlayHover.png");
         this.load.image("sprBtnPlayDown", "content/sprBtnPlayDown.png");
@@ -82,17 +84,10 @@ class SceneMainMenu extends Phaser.Scene {
         //     this.scene.start("SceneTest");
         // }, this);
 
-        this.title = this.add.text(this.game.config.width * 0.5, 128, "JS Shmup Project", {
-            fontFamily: 'uiFont',
-            fontSize: 28,
-            fontStyle: 'bold',
-            color: '#ffffff',
-            align: 'center'
-        });
+        this.title = this.add.bitmapText(this.game.config.width * 0.5, 128, 'uiFont',  "JS Shmup Project", 38);
         this.title.setOrigin(0.5);
 
-        this.title2 = this.add.text(this.game.config.width * 0.75, 148, "JS STG プロジェクト", {
-            fontFamily: 'uiFont',
+        this.title2 = this.add.text(this.game.config.width * 0.75, 158, "JS STG プロジェクト", {
             fontSize: 12,
             fontStyle: 'bold',
             color: '#ffffff',
@@ -100,8 +95,7 @@ class SceneMainMenu extends Phaser.Scene {
         });
         this.title2.setOrigin(0.5);
 
-        this.ver = this.add.text(this.game.config.width * 0.85, this.game.config.height * 0.95, "v0.2.3", {
-            fontFamily: 'uiFont',
+        this.ver = this.add.text(this.game.config.width * 0.89, this.game.config.height * 0.96, "v0.2.3", {
             fontSize: 12,
             color: '#ffffff',
             align: 'right'
