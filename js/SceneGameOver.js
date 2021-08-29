@@ -11,22 +11,19 @@ class SceneGameOver extends Phaser.Scene {
 
   init (data){
     this.finalScore = data.score;
-    this.finalTime = data.time;
+    this.state = data.state;
   }
 
   create() {
-    this.title = this.add.bitmapText(this.game.config.width * 0.5, 128, 'uiFont', "GAME OVER", 32);
+    this.title = this.add.bitmapText(this.game.config.width * 0.5, 128, 'uiFont', this.state, 32);
     this.title.setOrigin(0.5);
 
     this.score = this.add.bitmapText(this.game.config.width * 0.5, 188, 'uiFont', "SCORE: " + this.finalScore, 28);
     this.score.setOrigin(0.5);
 
-    this.time = this.add.bitmapText(this.game.config.width * 0.5, 248, 'uiFont', this.finalTime.text,  28);
-    this.time.setOrigin(0.5);
-
     this.sfx = {
-      btnOver: this.sound.add("sndBtnOver"),
-      btnDown: this.sound.add("sndBtnDown")
+      btnOver: this.sound.add("sndBtnOver", { volume: 0.2 }),
+      btnDown: this.sound.add("sndBtnDown", { volume: 0.2 })
     };
 
     this.btnRestart = this.add.sprite(

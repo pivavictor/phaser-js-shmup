@@ -1,6 +1,6 @@
 var config = {
     type: Phaser.WEBGL,
-    width: 480,
+    width: 800,
     height: 600,
     backgroundColor: "black",
     physics: {
@@ -9,12 +9,14 @@ var config = {
             gravity: {
                 x: 0,
                 y: 0
-            }
+            },
+            debug: false
         }
     },
     scene: [SceneMainMenu,
+        ScenePause,
         SceneMain,
-        SceneTest,
+        SceneClear,
         SceneGameOver
     ],
     pixelArt: true,

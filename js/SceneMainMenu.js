@@ -20,7 +20,7 @@ class SceneMainMenu extends Phaser.Scene {
 
         this.load.image("sprBg0", "content/sprBg0.png");
         this.load.image("sprBg1", "content/sprBg1.png");
-        this.load.spritesheet("sprExplosion", "content/sprExplosion.png", {
+        this.load.spritesheet("sprExplosion", "content/sprExplosion2.png", {
             frameWidth: 32,
             frameHeight: 32
         });
@@ -30,11 +30,11 @@ class SceneMainMenu extends Phaser.Scene {
 
     create() {
         this.sfx = {
-            btnOver: this.sound.add("sndBtnOver"),
-            btnDown: this.sound.add("sndBtnDown")
+            btnOver: this.sound.add("sndBtnOver", { volume: 0.2 }),
+            btnDown: this.sound.add("sndBtnDown", { volume: 0.2 })
         };
 
-        var music = this.sound.add("bgm", { volume: 0.4 });
+        var music = this.sound.add("bgm", { volume: 0.2 });
         music.setLoop(true);
         music.play();
 
@@ -87,7 +87,7 @@ class SceneMainMenu extends Phaser.Scene {
         this.title = this.add.bitmapText(this.game.config.width * 0.5, 128, 'uiFont',  "JS Shmup Project", 38);
         this.title.setOrigin(0.5);
 
-        this.title2 = this.add.text(this.game.config.width * 0.75, 158, "JS STG プロジェクト", {
+        this.title2 = this.add.text(this.game.config.width * 0.65, 158, "JS STG プロジェクト", {
             fontSize: 12,
             fontStyle: 'bold',
             color: '#ffffff',
@@ -95,24 +95,10 @@ class SceneMainMenu extends Phaser.Scene {
         });
         this.title2.setOrigin(0.5);
 
-        this.ver = this.add.text(this.game.config.width * 0.89, this.game.config.height * 0.96, "v0.2.3", {
+        this.ver = this.add.text(this.game.config.width * 0.89, this.game.config.height * 0.96, "v0.3.0", {
             fontSize: 12,
             color: '#ffffff',
             align: 'right'
         })
-
-        this.backgrounds = [];
-        for (var i = 0; i < 5; i++) {
-            var keys = ["sprBg0", "sprBg1"];
-            var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-            var bg = new ScrollingBackground(this, key, i * 10);
-            this.backgrounds.push(bg);
-        }
-    }
-
-    update() {
-        for (var i = 0; i < this.backgrounds.length; i++) {
-            this.backgrounds[i].update();
-        }
     }
 }
