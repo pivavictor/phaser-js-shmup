@@ -35,7 +35,7 @@ class ScenePause extends Phaser.Scene {
 
         retry.alpha = 0.3;
 
-        this.input.keyboard.on('keydown-Z', function (event) {
+        this.input.keyboard.on('keydown-ENTER', function (event) {
             sfx.btnDown.play();
             if (this.option == 2) {
                 this.option = 1;
@@ -111,7 +111,7 @@ class SceneClear extends Phaser.Scene {
         var livesText = this.add.bitmapText(156, 265, 'uiFont', 'LIFE BONUS: ' + bonusScore + 'x' + this.lives, 14);
         var timeText = this.add.bitmapText(156, 285, 'uiFont', 'TIME BONUS: ' + timeBonus, 14);
         var scoreText = this.add.bitmapText(156, 325, 'uiFont', 'SCORE: ' + score, 14);
-        this.add.bitmapText(190, 350, 'uiFont', 'Press Z to retry', 10);
+        this.add.bitmapText(160, 350, 'uiFont', 'Press ENTER to retry', 10);
         this.time.addEvent({
             delay: 60,
             callback: function () {
@@ -128,7 +128,7 @@ class SceneClear extends Phaser.Scene {
             repeat: 99
         });
 
-        this.input.keyboard.on('keydown-Z', function (event) {
+        this.input.keyboard.on('keydown-ENTER', function (event) {
             btnDown.play();
             this.game.scene.bringToTop('SceneMain');
             //this.game.scene.sleep('ScenePause');
@@ -181,7 +181,10 @@ class SceneMain extends Phaser.Scene {
             frameWidth: 18,
             frameHeight: 18
         });
-        this.load.image("sprMeteor", "content/sprMeteor.png");
+        this.load.spritesheet("sprMeteor", "content/sprMeteor.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        });
         this.load.image("sprLaserEnemy0", "content/sprLaserEnemy0.png");
         this.load.image("sprLaserEnemy1", "content/sprLaserEnemy1.png");
         this.load.image("sprDestructableBullet", "content/sprDestructableBullet.png");
@@ -194,7 +197,8 @@ class SceneMain extends Phaser.Scene {
         this.load.image("sprFocusBeam", "content/sprFocusBeam.png");
         this.load.spritesheet("sprPlayer", "content/sprPlayer.png", {
             frameWidth: 16,
-            frameHeight: 16
+            frameHeight: 16,
+            endFrame: 19
         });
         this.load.image("sprPowerUp", "content/sprPowerUp.png");
         this.load.spritesheet("sprOrb", "content/sprOrb.png", {
@@ -234,22 +238,85 @@ class SceneMain extends Phaser.Scene {
 
         //#region animations
         this.anims.create({
-            key: "sprChaser",
-            frames: this.anims.generateFrameNumbers("sprChaser"),
+            key: "sprChaserSpread",
+            frames: this.anims.generateFrameNumbers("sprChaser", { start: 0, end: 3}),
             frameRate: 50,
             repeat: -1
         });
 
         this.anims.create({
-            key: "sprEnemy0",
-            frames: this.anims.generateFrameNumbers("sprEnemy0"),
+            key: "sprChaserBeam",
+            frames: this.anims.generateFrameNumbers("sprChaser", { start: 4, end: 7}),
+            frameRate: 50,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprChaserHoming",
+            frames: this.anims.generateFrameNumbers("sprChaser", { start: 8, end: 11}),
+            frameRate: 50,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprChaserOrbs",
+            frames: this.anims.generateFrameNumbers("sprChaser", { start: 12, end: 15}),
+            frameRate: 50,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprEnemy0Spread",
+            frames: this.anims.generateFrameNumbers("sprEnemy0", { start: 0, end: 3}),
             frameRate: 20,
             repeat: -1
         });
 
         this.anims.create({
-            key: "sprBox",
-            frames: this.anims.generateFrameNumbers("sprBox"),
+            key: "sprEnemy0Beam",
+            frames: this.anims.generateFrameNumbers("sprEnemy0", { start: 4, end: 7}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprEnemy0Homing",
+            frames: this.anims.generateFrameNumbers("sprEnemy0", { start: 8, end: 11}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprEnemy0Orbs",
+            frames: this.anims.generateFrameNumbers("sprEnemy0", { start: 12, end: 15}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprBoxSpread",
+            frames: this.anims.generateFrameNumbers("sprBox", { start: 0, end: 7 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprBoxBeam",
+            frames: this.anims.generateFrameNumbers("sprBox", { start: 8, end: 15 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprBoxHoming",
+            frames: this.anims.generateFrameNumbers("sprBox", { start: 16, end: 23 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprBoxOrbs",
+            frames: this.anims.generateFrameNumbers("sprBox", { start: 24, end: 31 }),
             frameRate: 6,
             repeat: -1
         });
@@ -264,7 +331,35 @@ class SceneMain extends Phaser.Scene {
 
         this.anims.create({
             key: "sprPlayer",
-            frames: this.anims.generateFrameNumbers("sprPlayer"),
+            frames: this.anims.generateFrameNumbers("sprPlayer", { start: 0, end: 3 }),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprPlayerSpread",
+            frames: this.anims.generateFrameNumbers("sprPlayer", { start: 4, end: 7}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprPlayerBeam",
+            frames: this.anims.generateFrameNumbers("sprPlayer", { start: 8, end: 11}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprPlayerHoming",
+            frames: this.anims.generateFrameNumbers("sprPlayer", { start: 12, end: 15}),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "sprPlayerOrbs",
+            frames: this.anims.generateFrameNumbers("sprPlayer", { start: 16, end: 19}),
             frameRate: 20,
             repeat: -1
         });
@@ -552,10 +647,12 @@ class SceneMain extends Phaser.Scene {
         this.carrierSpawn = this.time.addEvent({
             delay: 30000,
             callback: function () {
+                var type = Phaser.Math.Between(1, 4);
                 this.enemies.add(new CarrierShip(this,
                     Phaser.Math.Between(this.physics.world.bounds.width * 0.1, this.physics.world.bounds.width * 0.9),
                     0,
-                    1))
+                    this.diffMulti,
+                    type))
             },
             callbackScope: this,
             loop: true
@@ -761,12 +858,14 @@ class SceneMain extends Phaser.Scene {
 
         Phaser.Actions.SetXY([this.circle], this.player.x, this.player.y);
 
-        Phaser.Actions.PlaceOnCircle(
-            this.orbs.getChildren(),
-            this.circle,
-            this.startAngle.getValue(),
-            this.endAngle.getValue()
-        );
+        if (this.player.weapon != 10) {
+            Phaser.Actions.PlaceOnCircle(
+                this.orbs.getChildren(),
+                this.circle,
+                this.startAngle.getValue(),
+                this.endAngle.getValue()
+            );
+        }
 
         for (var i = 0; i < this.orbs.getChildren().length; i++) {
             var orb = this.orbs.getChildren()[i];
@@ -806,24 +905,30 @@ class SceneMain extends Phaser.Scene {
             // } else {
             //     this.player.setData("isShooting", false);
             // }
-
+            // if (this.keyE.isDown && this.keyR.isDown) {
+            //     if (this.orbs.getChildren().length == 0) {
+            //         this.player.updateOrbs();
+            //     }
+            //     this.player.weapon = 10;
+            //     this.player.setData("isShooting", true);
+            // } else 
             if (this.keyQ.isDown) {
-                this.player.setTint(0xf0b27a);
+                if(this.player.weapon != 1)this.player.play("sprPlayerSpread");
                 this.orbs.clear(false, true);
                 this.player.weapon = 1;
                 this.player.setData("isShooting", true);
             } else if (this.keyW.isDown) {
-                this.player.setTint(0x85c1e9);
+                if(this.player.weapon != 2)this.player.play("sprPlayerBeam");
                 this.orbs.clear(false, true);
                 this.player.weapon = 2;
                 this.player.setData("isShooting", true);
             } else if (this.keyE.isDown) {
-                this.player.setTint(0xbb8fce);
+                if(this.player.weapon != 3)this.player.play("sprPlayerHoming");
                 this.orbs.clear(false, true);
                 this.player.weapon = 3;
                 this.player.setData("isShooting", true);
             } else if (this.keyR.isDown) {
-                this.player.setTint(0xcd6155);
+                if(this.player.weapon != 4)this.player.play("sprPlayerOrbs");
                 if (this.orbs.getChildren().length == 0) {
                     this.player.updateOrbs();
                 }
@@ -832,8 +937,8 @@ class SceneMain extends Phaser.Scene {
             } else {
                 this.player.setData("isShooting", false);
                 this.orbs.clear(false, true);
+                if(this.player.weapon != 0)this.player.play("sprPlayer");
                 this.player.weapon = 0;
-                this.player.clearTint();
             }
 
 
@@ -852,6 +957,7 @@ class SceneMain extends Phaser.Scene {
                 enemy.y > this.physics.world.bounds.height + enemy.displayHeight) {
 
                 if (enemy) {
+                    enemy.setData("isDead", true);
                     if (enemy.onDestroy !== undefined) {
                         enemy.onDestroy();
                     }
@@ -976,6 +1082,13 @@ class SceneMain extends Phaser.Scene {
                 this.weaponUI.getChildren()[2].setTexture("uiWeapon3off");
                 this.weaponUI.getChildren()[3].setTexture("uiWeapon4");
                 break;
+            case 10:
+                this.weaponText.setText('WEAPON: HOMING ORBS');
+                this.weaponUI.getChildren()[0].setTexture("uiWeapon1off");
+                this.weaponUI.getChildren()[1].setTexture("uiWeapon2off");
+                this.weaponUI.getChildren()[2].setTexture("uiWeapon3");
+                this.weaponUI.getChildren()[3].setTexture("uiWeapon4");
+                break;
         }
     }
 
@@ -987,19 +1100,19 @@ class SceneMain extends Phaser.Scene {
         var warning = this.add.image(x, 20, "sprWarning");
         warning.scale = 2;
         warning.setDepth(11);
-
+        var type = Phaser.Math.Between(1, 4);
         this.time.addEvent({
             delay: 1000,
             callback: function () {
                 warning.destroy();
-                var enemy = new GunShip(this, wave, x, 0, this.diffMulti);
+                var enemy = new GunShip(this, wave, x, 0, this.diffMulti, type);
                 this.enemies.add(enemy);
                 this.time.addEvent({
                     delay: 80,
                     callback: function () {
-                        var enemy = new GunShip(this, wave, x + diff, 0, this.diffMulti);
+                        var enemy = new GunShip(this, wave, x + diff, 0, this.diffMulti, type);
                         this.enemies.add(enemy);
-                        var enemy = new GunShip(this, wave, x - diff, 0, this.diffMulti);
+                        var enemy = new GunShip(this, wave, x - diff, 0, this.diffMulti, type);
                         this.enemies.add(enemy);
                         diff += 30;
                     },
@@ -1021,7 +1134,7 @@ class SceneMain extends Phaser.Scene {
         }
         warning.scale = 2;
         warning.setDepth(11);
-
+        var type = Phaser.Math.Between(1, 4);
         this.time.addEvent({
             delay: 1000,
             callback: function () {
@@ -1030,9 +1143,9 @@ class SceneMain extends Phaser.Scene {
                     delay: 125,
                     callback: function () {
                         if (origin == 0) {
-                            var enemy = new ChaserShip(this, wave, 350, 0, 30, this.diffMulti);
+                            var enemy = new ChaserShip(this, wave, 350, 0, 30, this.diffMulti, type);
                         } else {
-                            var enemy = new ChaserShip(this, wave, -350, 480, 30, this.diffMulti);
+                            var enemy = new ChaserShip(this, wave, -350, 480, 30, this.diffMulti, type);
                         }
                         this.enemies.add(enemy);
                     },
@@ -1053,7 +1166,7 @@ class SceneMain extends Phaser.Scene {
         });
         Phaser.Actions.SetXY(warning.getChildren(), 20, 20, 55);
         warning.setDepth(11);
-
+        var type = Phaser.Math.Between(1, 4);
         this.time.addEvent({
             delay: 1000,
             callback: function () {
@@ -1062,7 +1175,7 @@ class SceneMain extends Phaser.Scene {
                     delay: 300,
                     callback: function () {
                         var x = Phaser.Math.Between(this.physics.world.bounds.width * 0.1, this.physics.world.bounds.width * 0.9);
-                        var enemy = new BigMeteor(this, wave, x, 0, this.diffMulti);
+                        var enemy = new BigMeteor(this, wave, x, 0, this.diffMulti, type);
                         this.enemies.add(enemy);
                     },
                     callbackScope: this,

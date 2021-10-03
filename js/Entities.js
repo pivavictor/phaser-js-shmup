@@ -41,15 +41,29 @@ class Entity extends Phaser.GameObjects.Sprite {
 }
 
 class ChaserShip extends Entity {
-    constructor(scene, wave, xSpeed, x, y, multi) {
+    constructor(scene, wave, xSpeed, x, y, multi, type) {
         super(scene, x, y, "sprChaser", "ChaserShip");
         this.wave = wave;
         this.body.velocity.x = xSpeed;
         this.health = 4 + (multi * 0.5);
         this.score = 40 + (multi * 20);
         this.multi = multi;
+        this.type = type;
+        switch (type) {
+            case 1:
+                this.play("sprChaserSpread");
+                break;
+            case 2:
+                this.play("sprChaserBeam");
+                break;
+            case 3:
+                this.play("sprChaserHoming");
+                break;
+            case 4:
+                this.play("sprChaserOrbs");
+                break;
+        }
         this.scale = 2;
-        this.play("sprChaser");
         this.chase = this.scene.time.addEvent({
             delay: 1000,
             callback: function () {
@@ -59,7 +73,7 @@ class ChaserShip extends Entity {
 
                 var angle = Math.atan2(dy, dx);
 
-                var speed = 375 + (this.multi * 175);
+                var speed = 350 + (this.multi * 75);
                 this.body.setVelocity(
                     Math.cos(angle) * speed,
                     Math.sin(angle) * speed
@@ -80,10 +94,35 @@ class ChaserShip extends Entity {
     update() {}
 
     onHit(playerLaser) {
-        if (playerLaser instanceof playerHoming) {
-            this.health -= playerLaser.damage * 2;
-        } else {
-            this.health -= playerLaser.damage;
+        switch (this.type) {
+            case 1:
+                if (playerLaser instanceof PlayerLaser) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 2:
+                if (playerLaser instanceof focusBeam) {
+                    this.health -= playerLaser.damage * 2.5;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 3:
+                if (playerLaser instanceof playerHoming) {
+                    this.health -= playerLaser.damage * 2;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 4:
+                if (playerLaser instanceof PlayerLaser2) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
         }
     }
 
@@ -94,12 +133,27 @@ class ChaserShip extends Entity {
 }
 
 class GunShip extends Entity {
-    constructor(scene, wave, x, y, multi) {
+    constructor(scene, wave, x, y, multi, type) {
         super(scene, x, y, "sprEnemy0", "GunShip");
         this.wave = wave;
-        this.body.velocity.y = 200;
+        this.body.velocity.y = 150 + multi * 10;
         this.health = 4 + (multi * 2);
         this.score = 40 + (multi * 10);
+        this.type = type;
+        switch (type) {
+            case 1:
+                this.play("sprEnemy0Spread");
+                break;
+            case 2:
+                this.play("sprEnemy0Beam");
+                break;
+            case 3:
+                this.play("sprEnemy0Homing");
+                break;
+            case 4:
+                this.play("sprEnemy0Orbs");
+                break;
+        }
         this.scale = 2;
         this.shootTimer = this.scene.time.addEvent({
             startAt: 1200 - (multi * 100),
@@ -116,14 +170,38 @@ class GunShip extends Entity {
             callbackScope: this,
             repeat: 0 + Math.floor(multi / 4)
         });
-        this.play("sprEnemy0");
     }
 
     onHit(playerLaser) {
-        if (playerLaser instanceof PlayerLaser) {
-            this.health -= playerLaser.damage * 3;
-        } else {
-            this.health -= playerLaser.damage;
+        switch (this.type) {
+            case 1:
+                if (playerLaser instanceof PlayerLaser) {
+                    this.health -= playerLaser.damage * 2.5;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 2:
+                if (playerLaser instanceof focusBeam) {
+                    this.health -= playerLaser.damage * 3.5;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 3:
+                if (playerLaser instanceof playerHoming) {
+                    this.health -= playerLaser.damage * 2.5;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 4:
+                if (playerLaser instanceof PlayerLaser2) {
+                    this.health -= playerLaser.damage * 2.5;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
         }
     }
 
@@ -137,14 +215,28 @@ class GunShip extends Entity {
 }
 
 class CarrierShip extends Entity {
-    constructor(scene, x, y, multi) {
+    constructor(scene, x, y, multi, type) {
         super(scene, x, y, "sprBox", "CarrierShip");
         this.body.velocity.y = 100;
         this.health = 5 + (multi * 15);
         this.score = 100 + (multi * 50);
         this.multi = multi;
         this.scale = 3;
-        this.play("sprBox");
+        this.type = type;
+        switch (type) {
+            case 1:
+                this.play("sprBoxSpread");
+                break;
+            case 2:
+                this.play("sprBoxBeam");
+                break;
+            case 3:
+                this.play("sprBoxHoming");
+                break;
+            case 4:
+                this.play("sprBoxOrbs");
+                break;
+        }
         this.stopSpeed = this.scene.time.addEvent({
             delay: 1500
         });
@@ -164,10 +256,35 @@ class CarrierShip extends Entity {
     }
 
     onHit(playerLaser) {
-        if (playerLaser instanceof PlayerLaser2) {
-            this.health -= playerLaser.damage * 2;
-        } else {
-            this.health -= playerLaser.damage;
+        switch (this.type) {
+            case 1:
+                if (playerLaser instanceof PlayerLaser) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 2:
+                if (playerLaser instanceof focusBeam) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 3:
+                if (playerLaser instanceof playerHoming) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 4:
+                if (playerLaser instanceof PlayerLaser2) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
         }
     }
 
@@ -178,7 +295,7 @@ class CarrierShip extends Entity {
 }
 
 class BigMeteor extends Entity {
-    constructor(scene, wave, x, y, multi) {
+    constructor(scene, wave, x, y, multi, type) {
         super(scene, x, y, "sprMeteor", "BigMeteor");
         this.wave = wave;
         this.multi = multi;
@@ -187,7 +304,22 @@ class BigMeteor extends Entity {
         this.body.velocity.y = Phaser.Math.Between(this.speed * 0.5, this.speed);
         this.health = 6 + (multi * 2);
         this.score = 20 + (multi * 5);
-        this.scale = 5;
+        this.scale = 5;        
+        this.type = type;
+        switch (type) {
+            case 1:
+                this.setTexture("sprMeteor", 0);
+                break;
+            case 2:
+                this.setTexture("sprMeteor", 1);
+                break;
+            case 3:
+                this.setTexture("sprMeteor", 2);
+                break;
+            case 4:
+                this.setTexture("sprMeteor", 3);
+                break;
+        }
     }
 
     update() {
@@ -195,22 +327,47 @@ class BigMeteor extends Entity {
     }
 
     onHit(playerLaser) {
-        if (playerLaser instanceof focusBeam) {
-            this.health -= playerLaser.damage * 3;
-        } else {
-            this.health -= playerLaser.damage;
+        switch (this.type) {
+            case 1:
+                if (playerLaser instanceof PlayerLaser) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 2:
+                if (playerLaser instanceof focusBeam) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 3:
+                if (playerLaser instanceof playerHoming) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 4:
+                if (playerLaser instanceof PlayerLaser2) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
         }
     }
 
     onDestroy() {
         for (var i = 0; i < 4; i++) {
-            this.scene.enemies.add(new SmallMeteor(this.scene, this.x, this.y, this.multi));
+            this.scene.enemies.add(new SmallMeteor(this.scene, this.x, this.y, this.multi, this.type));
         }
     }
 }
 
 class SmallMeteor extends Entity {
-    constructor(scene, x, y, multi) {
+    constructor(scene, x, y, multi, type) {
         super(scene, x, y, "sprMeteor", "SmallMeteor");
         this.speed = 200 + (multi * 25);
         this.seedX = Phaser.Math.Between(0, 10);
@@ -221,7 +378,22 @@ class SmallMeteor extends Entity {
         else this.body.velocity.y = this.speed;
         this.health = 4 + multi * 0.5;
         this.score = 10 + multi;
-        this.scale = 3;
+        this.scale = 3;             
+        this.type = type;
+        switch (type) {
+            case 1:
+                this.setTexture("sprMeteor", 0);
+                break;
+            case 2:
+                this.setTexture("sprMeteor", 1);
+                break;
+            case 3:
+                this.setTexture("sprMeteor", 2);
+                break;
+            case 4:
+                this.setTexture("sprMeteor", 3);
+                break;
+        }
     }
 
     update() {
@@ -229,10 +401,35 @@ class SmallMeteor extends Entity {
     }
 
     onHit(playerLaser) {
-        if (playerLaser instanceof focusBeam) {
-            this.health -= playerLaser.damage * 3;
-        } else {
-            this.health -= playerLaser.damage;
+        switch (this.type) {
+            case 1:
+                if (playerLaser instanceof PlayerLaser) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 2:
+                if (playerLaser instanceof focusBeam) {
+                    this.health -= playerLaser.damage * 3;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 3:
+                if (playerLaser instanceof playerHoming) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
+            case 4:
+                if (playerLaser instanceof PlayerLaser2) {
+                    this.health -= playerLaser.damage * 4;
+                } else {
+                    this.health -= playerLaser.damage * 0.5;
+                }
+                break;
         }
     }
 }
@@ -259,7 +456,7 @@ class Boss extends Entity {
             delay: 100,
             callback: function () {
                 this.timeBonus -= 0.1;
-                if(this.timeBonus <= 0.12) this.timeBonus = 0;
+                if (this.timeBonus <= 0.12) this.timeBonus = 0;
                 this.timeText.setText(this.timeBonus.toFixed(1) + 's');
             },
             callbackScope: this,
@@ -664,7 +861,7 @@ class Player extends Entity {
 
         this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
         this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
-        
+
         if (this.getData("isShooting")) {
             if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
                 this.setData("timerShootTick", this.getData("timerShootTick") + 1); // every game update, increase timerShootTick by one until we reach the value of timerShootDelay
@@ -805,19 +1002,19 @@ class Player extends Entity {
         this.setData("timerShootDelay", 1);
         switch (this.power) {
             case 1:
-                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 35, 2));
+                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 80, 2));
                 break;
             case 2:
-                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 35, 4, ));
+                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 80, 4, ));
                 break;
             case 3:
-                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 35, 6, 0.08));
+                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 80, 6, 0.08));
                 break;
             case 4:
-                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 35, 8, 0.08));
+                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 80, 8, 0.08));
                 break;
             case 5:
-                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 35, 10, 0.1));
+                this.scene.playerLasers.add(new focusBeam(this.scene, this.x, this.y - 80, 10, 0.1));
                 break;
         }
         this.setData("timerShootTick", 0);
